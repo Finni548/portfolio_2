@@ -27,12 +27,12 @@
       "title": hero.title,
       "subtitle": hero.subtitle,
       "copy": hero.copy,
-      "portrait": hero.portrait.asset->url
+      "portrait": hero.portrait.asset->url + "?w=900&auto=format"
     },
     "about": {
       "title": about.title,
       "bio": about.bio[]{ "text": text },
-      "image": about.image.asset->url
+      "image": about.image.asset->url + "?w=900&auto=format"
     },
     "skills": skills[],
     "tools": tools[]{ label, name, detail },
@@ -55,12 +55,12 @@
       "group": group->name,
       desc,
       cardDesc,
-      "cover": cover.asset->url,
+      "cover": cover.asset->url + "?w=800&auto=format",
       tech,
       year,
       accent,
       "images": images[]{
-        "src": asset.asset->url,
+        "src": asset.asset->url + "?w=1200&auto=format",
         phone,
         wide,
         half
@@ -184,7 +184,7 @@
 
   function projectCardHTML(p) {
     return (
-      `<a class="projectCard reveal" href="./project.html?id=${esc(p.id)}">` +
+      `<article class="projectCard reveal" data-project="${esc(p.id)}">` +
       `<div class="projectCard__media"><img src="${esc(p.cover)}" alt="${esc(p.title)}" /></div>` +
       `<div class="projectCard__body">` +
       `<p class="projectCard__category">${esc(p.category)}</p>` +
@@ -193,7 +193,7 @@
       `<p class="projectCard__tech">${esc(p.tech)}</p>` +
       `</div>` +
       `<div class="projectCard__cta">View Project <span aria-hidden="true">→</span></div>` +
-      `</a>`
+      `</article>`
     );
   }
 
@@ -636,6 +636,8 @@
           closeLightbox();
         }
       });
+      const lightboxClose = lightbox.querySelector(".lightbox__close");
+      if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
     }
 
     document.addEventListener("keydown", (e) => {

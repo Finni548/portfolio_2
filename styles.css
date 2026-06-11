@@ -930,8 +930,10 @@ img {
   border: 1px solid var(--line);
   border-bottom: none;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  touch-action: pan-y;
   will-change: transform, opacity;
   scrollbar-width: thin;
   scrollbar-color: var(--line) transparent;
@@ -1109,6 +1111,29 @@ img {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   cursor: pointer;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(20, 20, 20, 0.85);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.lightbox__close:hover {
+  border-color: rgba(255, 159, 192, 0.5);
+  color: var(--pink);
+  background: rgba(32, 32, 32, 1);
 }
 
 .lightbox__wrap {
