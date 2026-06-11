@@ -184,15 +184,15 @@
 
   function projectCardHTML(p) {
     return (
-      `<article class="projectCard reveal" data-project="${esc(p.id)}">` +
-      `<div class="projectCard__media"><img src="${esc(p.cover)}" alt="${esc(p.title)}" /></div>` +
+      `<article class="projectCard reveal" data-project="${esc(p.id)}" role="button" tabindex="0" aria-label="Projekt ansehen: ${esc(p.title)}">` +
+      `<div class="projectCard__media"><img src="${esc(p.cover)}" alt="${esc(p.title)} — ${esc(p.category)}" loading="lazy" /></div>` +
       `<div class="projectCard__body">` +
       `<p class="projectCard__category">${esc(p.category)}</p>` +
       `<h3 class="projectCard__title">${esc(p.title)}</h3>` +
       `<p class="projectCard__desc">${esc(p.cardDesc || p.desc)}</p>` +
       `<p class="projectCard__tech">${esc(p.tech)}</p>` +
       `</div>` +
-      `<div class="projectCard__cta">View Project <span aria-hidden="true">→</span></div>` +
+      `<div class="projectCard__cta" aria-hidden="true">Projekt ansehen <span>→</span></div>` +
       `</article>`
     );
   }
@@ -572,6 +572,8 @@
       modal.querySelector(".pModal__panel").scrollTop = 0;
       if (lenis) lenis.stop();
       document.body.style.overflow = "hidden";
+      // Fokus auf Schließen-Button setzen für Tastaturnutzer
+      setTimeout(() => modal.querySelector(".pModal__close").focus(), 100);
       if (window.gsap) {
         window.gsap.fromTo(
           modal,
@@ -586,6 +588,8 @@
       }
     };
 
+    let lastFocusedCard = null;
+
     const closeModal = () => {
       if (!modal || modal.hasAttribute("hidden")) return;
       const done = () => {
@@ -594,6 +598,8 @@
         if (lenis) lenis.start();
         const vid = modal.querySelector("video");
         if (vid) vid.pause();
+        // Fokus zurück zur Karte die das Modal geöffnet hat
+        if (lastFocusedCard) lastFocusedCard.focus();
       };
       if (window.gsap) {
         window.gsap.to(modal, {
@@ -608,8 +614,10 @@
     };
 
     $$("[data-project]").forEach((card) => {
-      card.setAttribute("tabindex", "0");
-      card.addEventListener("click", () => openProject(card.dataset.project));
+      card.addEventListener("click", () => {
+        lastFocusedCard = card;
+        openProject(card.dataset.project);
+      });
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
