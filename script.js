@@ -184,7 +184,7 @@
 
   function projectCardHTML(p) {
     return (
-      `<article class="projectCard reveal" data-project="${esc(p.id)}">` +
+      `<a class="projectCard reveal" href="./project.html?id=${esc(p.id)}">` +
       `<div class="projectCard__media"><img src="${esc(p.cover)}" alt="${esc(p.title)}" /></div>` +
       `<div class="projectCard__body">` +
       `<p class="projectCard__category">${esc(p.category)}</p>` +
@@ -193,7 +193,7 @@
       `<p class="projectCard__tech">${esc(p.tech)}</p>` +
       `</div>` +
       `<div class="projectCard__cta">View Project <span aria-hidden="true">→</span></div>` +
-      `</article>`
+      `</a>`
     );
   }
 

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080808" />
+    <title>Projekt — Finnja Krämer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      .projectPage {
+        min-height: 100vh;
+        padding-top: 120px;
+        padding-bottom: 100px;
+      }
+
+      .projectPage__back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 48px;
+        transition: color 0.2s var(--ease);
+        text-decoration: none;
+      }
+
+      .projectPage__back:hover {
+        color: var(--pink);
+      }
+
+      .projectPage__header {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 40px;
+        margin-bottom: 48px;
+      }
+
+      .projectPage__category {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--soft-pink);
+        margin: 0 0 16px;
+      }
+
+      .projectPage__title {
+        font-family: "Space Grotesk", Inter, sans-serif;
+        font-size: clamp(48px, 8vw, 110px);
+        line-height: 0.88;
+        letter-spacing: -0.04em;
+        color: var(--pink);
+        margin: 0 0 20px;
+      }
+
+      .projectPage__meta {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .projectPage__cover {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: var(--radius-lg);
+        margin-bottom: 48px;
+        display: block;
+      }
+
+      .projectPage__desc {
+        font-size: 18px;
+        line-height: 1.85;
+        color: rgba(244, 244, 244, 0.88);
+        max-width: 68ch;
+        margin: 0 0 64px;
+      }
+
+      .projectPage__gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+
+      .projectPage__gallery img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: var(--radius);
+        cursor: zoom-in;
+        transition: transform 0.4s var(--ease-soft);
+        border: 1px solid var(--line);
+      }
+
+      .projectPage__gallery img:hover {
+        transform: scale(1.02);
+      }
+
+      .projectPage__gallery--phone {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+
+      .projectPage__gallery--phone img {
+        aspect-ratio: 958/1400;
+        border-radius: 16px;
+      }
+
+      .projectPage__video {
+        margin-bottom: 48px;
+      }
+
+      .projectPage__video video {
+        width: 100%;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        background: #000;
+        max-height: 70vh;
+        object-fit: contain;
+      }
+
+      .projectPage__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        color: var(--muted);
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <header class="nav">
+      <nav class="nav__inner" aria-label="Primary navigation">
+        <a class="nav__brand" href="./index.html" data-magnet>
+          <span class="nav__logo">FK</span>
+          <span class="nav__name">Finnja Krämer</span>
+        </a>
+        <div class="nav__links">
+          <a class="nav__link" href="./index.html#home">Home</a>
+          <a class="nav__link" href="./index.html#about">About</a>
+          <a class="nav__link is-active" href="./index.html#projects">Projects</a>
+          <a class="nav__link" href="./index.html#contact-page">Contact</a>
+        </div>
+        <button class="nav__hamburger" aria-label="Menü" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="projectPage" id="projectPage">
+        <div class="container">
+          <div class="projectPage__loading" id="loadingState">Projekt wird geladen…</div>
+          <div id="projectContent" style="display:none">
+            <a href="./index.html#projects" class="projectPage__back">← Alle Projekte</a>
+            <div class="projectPage__header">
+              <p class="projectPage__category" id="pCategory"></p>
+              <h1 class="projectPage__title" id="pTitle"></h1>
+              <p class="projectPage__meta" id="pMeta"></p>
+            </div>
+            <img class="projectPage__cover" id="pCover" src="" alt="" />
+            <p class="projectPage__desc" id="pDesc"></p>
+            <div class="projectPage__gallery" id="pGallery"></div>
+            <div class="projectPage__video" id="pVideo"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true">
+      <div class="lightbox__bg"></div>
+      <div class="lightbox__wrap">
+        <img class="lightbox__img" src="" alt="" />
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+    <script>
+      const SANITY_PROJECT_ID = "b3k4pncg";
+      const SANITY_DATASET = "portfolio";
+      const SANITY_API_VERSION = "2024-01-01";
+
+      const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, c =>
+        ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+
+      function sanityFetch(query) {
+        const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+        return fetch(url).then(r => r.json()).then(r => r.result);
+      }
+
+      async function loadProject() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        if (!id) { window.location.href = "./index.html#projects"; return; }
+
+        try {
+
+        // Sanity IDs can have a "drafts." prefix — strip it for the query
+        const cleanId = id.replace(/^drafts\./, "");
+
+        const query = `*[_type == "project" && (_id == "${cleanId}" || _id == "drafts.${cleanId}")][0]{
+          "id": _id, title, category,
+          "group": group->name,
+          desc, tech, year, accent,
+          "cover": cover.asset->url,
+          "images": images[]{ "src": asset.asset->url, phone, wide, half },
+          "video": video.asset->url
+        }`;
+
+        const p = await sanityFetch(query);
+        if (!p) {
+          document.getElementById("loadingState").textContent = "Projekt nicht gefunden (ID: " + id + ")";
+          return;
+        }
+
+        document.title = `${p.title} — Finnja Krämer`;
+
+        if (p.accent) document.documentElement.style.setProperty("--modal-accent", p.accent);
+
+        document.getElementById("pCategory").textContent = p.category || "";
+        document.getElementById("pTitle").textContent = p.title || "";
+        document.getElementById("pMeta").textContent = (p.tech || "") + (p.year ? " · " + p.year : "");
+        document.getElementById("pDesc").textContent = p.desc || "";
+
+        const cover = document.getElementById("pCover");
+        if (p.cover) { cover.src = p.cover; cover.alt = p.title; }
+        else { cover.style.display = "none"; }
+
+        const images = Array.isArray(p.images) ? p.images.filter(i => i.src) : [];
+        const isPhone = images.some(i => i.phone);
+        const gallery = document.getElementById("pGallery");
+        gallery.className = "projectPage__gallery" + (isPhone ? " projectPage__gallery--phone" : "");
+        gallery.innerHTML = images.map(img =>
+          `<img src="${esc(img.src)}" alt="${esc(p.title)}" loading="lazy" />`
+        ).join("");
+
+        gallery.querySelectorAll("img").forEach(img => {
+          img.addEventListener("click", () => openLightbox(img.src));
+        });
+
+        const videoWrap = document.getElementById("pVideo");
+        if (p.video) {
+          videoWrap.innerHTML = `<video controls preload="none" playsinline>
+            <source src="${esc(p.video)}" type="video/mp4" />
+          </video>`;
+        }
+
+        document.getElementById("loadingState").style.display = "none";
+        document.getElementById("projectContent").style.display = "block";
+
+        } catch (err) {
+          document.getElementById("loadingState").textContent = "Fehler: " + err.message + " — ID: " + id;
+          console.error(err);
+        }
+      }
+
+      const lightbox = document.getElementById("lightbox");
+      function openLightbox(src) {
+        lightbox.querySelector(".lightbox__img").src = src;
+        lightbox.removeAttribute("hidden");
+      }
+      lightbox.addEventListener("click", e => {
+        if (e.target.classList.contains("lightbox__bg") || e.target === lightbox)
+          lightbox.setAttribute("hidden", "");
+      });
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape") lightbox.setAttribute("hidden", "");
+      });
+
+      // Cursor glow
+      const glow = document.querySelector(".cursor-glow");
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2, gx = mx, gy = my;
+      window.addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+      const tick = () => {
+        gx += (mx - gx) * 0.14; gy += (my - gy) * 0.14;
+        glow.style.left = gx + "px"; glow.style.top = gy + "px";
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+
+      // Hamburger
+      const hamburger = document.querySelector(".nav__hamburger");
+      const navEl = hamburger ? hamburger.closest(".nav") : null;
+      if (hamburger && navEl) {
+        hamburger.addEventListener("click", () => {
+          const isOpen = hamburger.getAttribute("aria-expanded") === "true";
+          hamburger.setAttribute("aria-expanded", String(!isOpen));
+          navEl.classList.toggle("nav--open", !isOpen);
+        });
+      }
+
+      loadProject();
+    </script>
+  </body>
+</html>
