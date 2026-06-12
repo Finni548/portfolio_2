@@ -27,7 +27,7 @@ body {
 body {
   margin: 0;
   font-family:
-    Inter,
+    var(--font-inter, Inter),
     system-ui,
     -apple-system,
     Segoe UI,
@@ -102,7 +102,7 @@ img {
 
 .sectionTitle {
   margin: 0;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: clamp(34px, 5vw, 80px);
   line-height: 0.92;
   letter-spacing: -0.03em;
@@ -147,7 +147,7 @@ img {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--white);
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-weight: 700;
 }
 
@@ -211,7 +211,7 @@ img {
 .hero__backtype span {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: clamp(110px, 16vw, 250px);
   line-height: 0.82;
   letter-spacing: -0.06em;
@@ -225,7 +225,7 @@ img {
 
 .hero__title {
   margin: 0;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: clamp(58px, 7vw, 120px);
   line-height: 0.84;
   letter-spacing: -0.04em;
@@ -364,7 +364,7 @@ img {
 
 .stat__num {
   display: block;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: 36px;
   color: var(--pink);
 }
@@ -467,7 +467,7 @@ img {
 
 .projectCard__title {
   margin: 8px 0 8px;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: 24px;
   letter-spacing: -0.02em;
   color: var(--pink);
@@ -570,7 +570,7 @@ img {
 
 .categoryHead h3 {
   margin: 0;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   color: var(--pink);
   font-size: clamp(22px, 2.8vw, 42px);
 }
@@ -872,6 +872,25 @@ img {
   }
 }
 
+/* ─── Reveal animation (triggered by RevealObserver) ─── */
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* ─── Floater CSS animations (replaces JS data-float) ─── */
+@keyframes float-a {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(8px, -8px, 0); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(-6px, 10px, 0); }
+}
+.floater--a { animation: float-a 5s ease-in-out infinite; }
+.floater--b { animation: float-b 6.5s ease-in-out infinite; }
+
 /* ─── Project Card CTA ─── */
 [data-project] {
   cursor: pointer;
@@ -1002,7 +1021,7 @@ img {
 
 .pModal__title {
   margin: 0 0 12px;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: clamp(36px, 5vw, 72px);
   line-height: 0.9;
   letter-spacing: -0.03em;
@@ -1208,7 +1227,7 @@ img {
   display: block;
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: clamp(100px, 14vw, 220px);
   line-height: 0.85;
   letter-spacing: -0.06em;
@@ -1224,7 +1243,7 @@ img {
 
 .about-hero__title {
   margin: 0 0 28px;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: clamp(48px, 7vw, 110px);
   line-height: 0.84;
   letter-spacing: -0.04em;
@@ -1339,7 +1358,7 @@ img {
 
 .tool-card__name {
   display: block;
-  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-family: var(--font-space-grotesk, 'Space Grotesk'), Inter, sans-serif;
   font-size: 18px;
   letter-spacing: -0.01em;
   color: var(--pink);
